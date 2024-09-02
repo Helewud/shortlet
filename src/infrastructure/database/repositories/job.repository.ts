@@ -173,7 +173,7 @@ export class JobRepository {
     const queryRunner =
       this.jobRepository.manager.connection.createQueryRunner();
     await queryRunner.connect();
-    await queryRunner.startTransaction();
+    await queryRunner.startTransaction('SERIALIZABLE');
 
     return queryRunner;
   }

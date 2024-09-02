@@ -175,7 +175,7 @@ export class ProfileRepository {
     const queryRunner =
       this.profileRepository.manager.connection.createQueryRunner();
     await queryRunner.connect();
-    await queryRunner.startTransaction();
+    await queryRunner.startTransaction('SERIALIZABLE');
 
     return queryRunner;
   }

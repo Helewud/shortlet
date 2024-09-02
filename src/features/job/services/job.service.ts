@@ -6,14 +6,12 @@ import {
 import { JobRepository } from '../../../infrastructure/database/repositories/job.repository';
 import { ProfileRepository } from '../../../infrastructure/database/repositories/profile.repository';
 import { ContractStatus } from '../../../common/enum';
-import { ContractRepository } from '../../../infrastructure/database/repositories/contract.repository';
 
 @Injectable()
 export class JobService {
   constructor(
     private readonly profileRepository: ProfileRepository,
     private readonly jobRepository: JobRepository,
-    private readonly contractRepository: ContractRepository,
   ) {}
 
   async getJobs(dto: {
@@ -81,12 +79,6 @@ export class JobService {
       ),
 
       this.jobRepository.updateOne({ id: job.id }, updateData, tx),
-
-      this.contractRepository.updateOne(
-        { id: job.contract_id },
-        { status: ContractStatus.TERMINATED },
-        tx,
-      ),
     ]);
 
     await this.jobRepository.commitTransaction(tx);

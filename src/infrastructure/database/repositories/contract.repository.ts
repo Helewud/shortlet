@@ -81,7 +81,7 @@ export class ContractRepository {
     const queryRunner =
       this.contractRepository.manager.connection.createQueryRunner();
     await queryRunner.connect();
-    await queryRunner.startTransaction();
+    await queryRunner.startTransaction('SERIALIZABLE');
 
     return queryRunner;
   }

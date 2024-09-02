@@ -120,7 +120,10 @@ describe('JobService', () => {
     it('should return error if profile balance is less than job price.', async () => {
       const price = +faker.finance.amount({ min: 5000, max: 70000 });
 
-      const job = FactoryModel.Job({ price });
+      const job = FactoryModel.Job({
+        price,
+        contract: FactoryModel.Contract({ status: ContractStatus.IN_PROGRESS }),
+      });
 
       // Spies
       const findJobByProfileIdSpy = jest
@@ -143,7 +146,7 @@ describe('JobService', () => {
 
       const job = FactoryModel.Job({
         price,
-        contract: FactoryModel.Contract(),
+        contract: FactoryModel.Contract({ status: ContractStatus.IN_PROGRESS }),
       });
 
       // Spies
