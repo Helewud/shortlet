@@ -7,11 +7,11 @@ export class ProfileEntity extends BaseEntity {
   @Column({ nullable: false, type: 'varchar' })
   uuid: string;
 
-  @Column({ nullable: false, type: 'varchar' })
+  @Column({ name: 'first_name', nullable: false, type: 'varchar' })
   first_name: string;
 
-  @Column({ nullable: false, type: 'varchar' })
-  last_Name: string;
+  @Column({ name: 'last_name', nullable: false, type: 'varchar' })
+  last_name: string;
 
   @Column({ nullable: false, type: 'varchar' })
   profession: string;

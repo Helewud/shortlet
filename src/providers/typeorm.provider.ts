@@ -10,8 +10,9 @@ export const typeormProvider: FactoryProvider[] = [
       const dataSource = new DataSource({
         type: 'postgres',
         url: envVars.POSTGRES_URL,
+        synchronize: false,
         entities: [`${__dirname}/../**/**.entity{.ts,.js}`],
-        synchronize: true,
+        migrations: [`${__dirname}/../migrations/**/**.entity{.ts,.js}`],
 
         ...(envVars.isProd && {
           ssl: true,

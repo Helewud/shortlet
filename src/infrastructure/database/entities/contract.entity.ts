@@ -1,7 +1,7 @@
-import { ContractStatus } from '../../../common/enum';
 import { BaseEntity } from './base.entity';
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { ProfileEntity } from './profile.entity';
+import { ContractStatus } from '../../../common/enum';
 
 @Entity({ name: 'contracts' })
 export class ContractEntity extends BaseEntity {
@@ -11,13 +11,13 @@ export class ContractEntity extends BaseEntity {
   @Column({ nullable: false, enum: ContractStatus })
   status: ContractStatus;
 
-  @Column({ nullable: false, type: 'int' })
-  contrator_id: number;
+  @Column({ name: 'contractor_id', nullable: false, type: 'int' })
+  contractor_id: number;
 
-  @Column({ nullable: false, type: 'int' })
-  client_id: string;
+  @Column({ name: 'client_id', nullable: false, type: 'int' })
+  client_id: number;
 
-  @JoinColumn({ name: 'contrator_id', referencedColumnName: 'id' })
+  @JoinColumn({ name: 'contractor_id', referencedColumnName: 'id' })
   @ManyToOne(() => ProfileEntity)
   contractor?: ProfileEntity;
 

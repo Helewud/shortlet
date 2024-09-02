@@ -3,7 +3,7 @@ import { DataSource } from 'typeorm';
 import { ProfileEntity } from '../infrastructure/database/entities/profile.entity';
 import { ProviderTokens } from '../common/enum';
 import { ContractEntity } from '../infrastructure/database/entities/contract.entity';
-import { JobEntity } from '../infrastructure/database/entities/jobs.entity';
+import { JobEntity } from '../infrastructure/database/entities/job.entity';
 
 export const typeormEntitiesProvider: FactoryProvider[] = [
   {

@@ -10,16 +10,16 @@ export class JobEntity extends BaseEntity {
   @Column({ nullable: false, type: 'decimal' })
   price: number;
 
-  @Column({ nullable: false })
+  @Column({ name: 'is_paid', nullable: false })
   is_paid: boolean;
 
-  @Column({ nullable: true, type: 'date' })
+  @Column({ name: 'paid_date', nullable: true, type: 'date' })
   paid_date?: string;
 
-  @Column({ nullable: false, type: 'int' })
-  contrat_id: number;
+  @Column({ name: 'contract_id', nullable: false, type: 'int' })
+  contract_id: number;
 
-  @JoinColumn({ name: 'contrat_id', referencedColumnName: 'id' })
+  @JoinColumn({ name: 'contract_id', referencedColumnName: 'id' })
   @ManyToOne(() => ContractEntity)
   contract?: ContractEntity;
 }

@@ -6,25 +6,19 @@ export type RepositoryJoin<T = any> = {
   select?: (keyof T)[];
 };
 
-export type RepositoryOrder = Record<string, 'ASC' | 'DESC'>;
-
 export type RepositoryFindOptions = {
   page?: number;
   limit?: number;
-  order?: RepositoryOrder;
   joins?: RepositoryJoin[];
   select?: string[];
-  //   omit?: string[];
 };
 
 export function transformRepositoryFindOptions(opts?: RepositoryFindOptions): {
   typeormQuery: Record<string, boolean | Record<string, boolean>>;
-  pagination: { limit: number; page: number };
 } {
   if (!opts || _.isEmpty(opts))
     return {
       typeormQuery: null,
-      pagination: null,
     };
 
   const optsObj = {};
@@ -39,11 +33,6 @@ export function transformRepositoryFindOptions(opts?: RepositoryFindOptions): {
   if (!opts?.page || opts?.page < 1) opts.page = 1;
   if (opts?.page) {
     optsObj['skip'] = (opts?.page - 1) * opts?.limit;
-  }
-
-  // Handle order query
-  if (opts?.order) {
-    optsObj['order'] = opts?.order;
   }
 
   // Handle select query
@@ -73,54 +62,7 @@ export function transformRepositoryFindOptions(opts?: RepositoryFindOptions): {
     optsObj['relations'] = { ...relations };
   }
 
-  //   if (opts?.omit && !_.isEmpty(opts?.omit)) {
-  //     const omit = {};
-  //     opts.omit.forEach((prop) => {
-  //       omit[prop] = false;
-  //     });
-  //     optsObj['select'] = { ...optsObj['select'], ...omit };
-  //   }
-
-  const pagination = {
-    limit: opts?.limit,
-    page: opts?.page,
-  };
-
-  return { typeormQuery: optsObj, pagination };
-}
-
-export function paginate<T>(data: {
-  limit: number;
-  page: number;
-  count: number;
-  docs: T;
-}) {
-  const totalPages = Math.ceil(data?.count / data?.limit);
-
-  return {
-    limit: data?.limit,
-    page: data?.page,
-    totalPages: totalPages,
-    totalRecords: data.count,
-    records: data?.docs,
-  };
-}
-
-export function _paginate<T>(data: {
-  limit: number;
-  page: number;
-  count: number;
-  docs: T;
-}) {
-  const totalPages = data?.count / data?.limit;
-
-  return {
-    limit: data?.limit,
-    page: data?.page,
-    totalPages: totalPages,
-    totalRecords: data.count,
-    records: data?.docs,
-  };
+  return { typeormQuery: optsObj };
 }
 
 type InputType<T> = T extends (...args: infer Args) => any ? Args : never;
